@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <input type="text" placeholder="Create new task" #newTask>
+  <button class="create-button" (click)="createTask(newTask.value)">Create new Task</button>
+
+  <ul>
+    <li *ngFor="let item of list" class="task-card">
+      <ng-container *ngIf="!item.isEditing; else editTemplate">
+        <div class="task-details">
+          <input type="text" [(ngModel)]="item.name" class="edit-input">
+        </div>
+        <div class="task-actions">
+          <button class="edit-button" (click)="item.isEditing = true">Edit</button>
+          <button class="remove-button" (click)="removeTask(item.id)">Remove</button>
+        </div>
+      </ng-container>
+      <ng-template #editTemplate>
+        <div class="edit-task">
+          <input type="text" [(ngModel)]="item.name" class="edit-input">
+          <button class="save-button" (click)="item.isEditing = false; saveTask(item)">Save</button>
+          <button class="cancel-button" (click)="item.isEditing = false">Cancel</button>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+</div>
